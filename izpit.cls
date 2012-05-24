@@ -158,6 +158,8 @@
   \@ifthen{\equal{#1}{311}}{\nastavi@ucilnico{\@tristoenajst}{3.11}}
   \@ifthen{\equal{#1}{312}}{\nastavi@ucilnico{\@tristodvanajst}{3.12}}
   \@ifthen{\equal{#1}{F1}}{\nastavi@ucilnico{\@fena}{F1}}
+  \@ifthen{\equal{#1}{MFP}}{\nastavi@ucilnico{\@mfp}{MFP}}
+  \@ifthen{\equal{#1}{VFP}}{\nastavi@ucilnico{\@vfp}{VFP}}
   \setboolean{@sedeznired}{true}
 }
 
@@ -212,12 +214,10 @@
     \hfill%
     \parbox[b]{\h@sirinaucilnice}{%
       \@ifthen{\boolean{@sedeznired}}{%
-        \parbox[b][\v@visinaucilnice]{\h@sirinaucilnice}{%
-          \@oznaka{\ucilnica@polje}{\ucilnica@oznaka}%
-        }%
+        \@oznaka{\hfill\llap{\ucilnica@polje}}{\hfill\ucilnica@oznaka}%
         \vskip \v@predvpisno%
       }%
-      \@oznaka{\vpisna@polje}{\vpisna@oznaka}%
+      \@oznaka{\vpisna@polje}{\hfill\vpisna@oznaka}%
     }%
   \@ifthen{\stevilo@nalog > -1}{%
     \def\@tempsize{3.5cm}%
@@ -367,7 +367,8 @@
 
 \newcommand{\vpisna@polje}{%
   \begin{tikzpicture}
-    \draw[xscale=\x@sirinavpisne, yscale=\x@visinavpisne, very thin] (0, 0) grid (8, 1);%
+    \draw[xscale=\x@sirinavpisne, yscale=\x@visinavpisne, very thin]
+      (0, 0) grid (8, 1);%
   \end{tikzpicture}%
 }
 
@@ -389,215 +390,174 @@
   \end{tikzpicture}%
 }
 
+\newcommand{\@nedovsed}[3][]{\draw[#1](#3, #2) node[sedez] {};}
+\newcommand{\@dovsed}[3][]{\draw[#1](#3, #2) node[sedez, dovoljen] {};}
+\newcommand{\@sedez}{\@ifstar{\@dovsed}{\@nedovsed}}
+\newcommand{\@sedezi}[4][\@sedez]{
+  \foreach \i in {#2} {
+    \foreach \j in {#3} {#1{\i}{\j}}
+    \foreach \j in {#4} {#1*{\i}{\j}}
+  }
+}
+
 \newcommand{\@dvestoena}{%
   \begin{tikzpicture}[ucilnica]
-    % tabla
     \draw[kateder] (-4,0) rectangle (4,1);
-    % sedezi
-    \foreach \vrsta in {-1,...,-6} {
-      % leva stran
-      \foreach \stolpec in {-7.5,-4.5}
-        \draw[xshift = -0.5cm, rotate around = {-30:(-4.5, \vrsta)}]
-          (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {-6.5,-5.5}
-        \draw[xshift = -0.5cm, rotate around = {-30:(-4.5, \vrsta)}]
-          (\stolpec, \vrsta) node[sedez] {};
-      % sredina
-      \foreach \stolpec in {-3.5, 0.5, 3.5}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {-2.5, -1.5, -0.5, 1.5, 2.5}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      % desna stran
-      \foreach \stolpec in {4.5,7.5}
-        \draw[xshift = 0.5cm, rotate around = {30:(4.5, \vrsta)}]
-          (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {5.5,6.5}
-        \draw[xshift = 0.5cm, rotate around = {30:(4.5, \vrsta)}]
-          (\stolpec, \vrsta) node[sedez] {};
+    \@sedezi{-1, ..., -6}{-2.5, -1.5, -0.5, 1.5, 2.5}{-3.5, 0.5, 3.5}
+
+    \newcommand{\l@nedovsed}[2]{%
+      \@nedovsed[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}%
     }
+    \newcommand{\l@dovsed}[2]{%
+      \@dovsed[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}%
+    }
+    \newcommand{\d@nedovsed}[2]{%
+      \@nedovsed[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}%
+    }
+    \newcommand{\d@dovsed}[2]{%
+      \@dovsed[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}%
+    }
+    \newcommand{\l@sedez}{\@ifstar{\l@dovsed}{\l@nedovsed}}
+    \newcommand{\d@sedez}{\@ifstar{\d@dovsed}{\d@nedovsed}}
+    \@sedezi[\l@sedez]{-1, ..., -6}{-6.5, -5.5}{-7.5, -4.5}
+    \@sedezi[\d@sedez]{-1, ..., -6}{6.5, 5.5}{7.5, 4.5}
   \end{tikzpicture}%
 }
 
 \newcommand{\@dvestodva}{%
   \begin{tikzpicture}[ucilnica]
-    % tabla
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
-    % leva stran
-    \foreach \vrsta in {-1,...,-8} {
-      \foreach \stolpec in {-3,-2}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      \foreach \stolpec in {-4,-1}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-    }
-    % desna stran
-    \foreach \vrsta in {-1,...,-7} {
-      \foreach \stolpec in {3,2}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      \foreach \stolpec in {4,1}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-    }
+    \@sedezi{-1, ..., -8}{-3, -2}{-4, -1}
+    \@sedezi{-1, ..., -7}{3, 2}{4, 1}
   \end{tikzpicture}%
 }
 
 \newcommand{\@dvestotri}{%
   \begin{tikzpicture}[ucilnica]
-    % tabla
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
-    % sedezi
-    \foreach \vrsta in {-1,...,-5} {
-      \foreach \stolpec in {-4,-2,1,3,5}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {-3,-1,2,4}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-    }
+    \@sedezi{-1, ..., -5}{-3, -1, 2, 4}{-4, -2, 1, 3, 5}
   \end{tikzpicture}%
 }
 
 \newcommand{\@dvestopet}{%
   \begin{tikzpicture}[ucilnica]
-    % tabla
     \draw[kateder] (-4,0) rectangle (4,1);
-    % sedezi
-    \foreach \vrsta in {-1,...,-7} {
-      % leva stran
-      \foreach \stolpec in {-7.5,-4.5}
-        \draw[xshift = -0.5cm, rotate around = {-30:(-4.5, \vrsta)}]
-          (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {-6.5,-5.5}
-        \draw[xshift = -0.5cm, rotate around = {-30:(-4.5, \vrsta)}]
-          (\stolpec, \vrsta) node[sedez] {};
-      % sredina
-      \foreach \stolpec in {-3.5, 0.5, 3.5}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {-2.5, -1.5, -0.5, 1.5, 2.5}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      % desna stran
-      \foreach \stolpec in {4.5,7.5}
-        \draw[xshift = 0.5cm, rotate around = {30:(4.5, \vrsta)}]
-          (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {5.5,6.5}
-        \draw[xshift = 0.5cm, rotate around = {30:(4.5, \vrsta)}]
-          (\stolpec, \vrsta) node[sedez] {};
+    \@sedezi{-1, ..., -7}{-2.5, -1.5, -0.5, 1.5, 2.5}{-3.5, 0.5, 3.5}
+
+    \newcommand{\l@nedovsed}[2]{%
+      \@nedovsed[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}%
     }
+    \newcommand{\l@dovsed}[2]{%
+      \@dovsed[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}%
+    }
+    \newcommand{\d@nedovsed}[2]{%
+      \@nedovsed[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}%
+    }
+    \newcommand{\d@dovsed}[2]{%
+      \@dovsed[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}%
+    }
+    \newcommand{\l@sedez}{\@ifstar{\l@dovsed}{\l@nedovsed}}
+    \newcommand{\d@sedez}{\@ifstar{\d@dovsed}{\d@nedovsed}}
+    \@sedezi[\l@sedez]{-1, ..., -7}{-6.5, -5.5}{-7.5, -4.5}
+    \@sedezi[\d@sedez]{-1, ..., -7}{6.5, 5.5}{7.5, 4.5}
   \end{tikzpicture}%
 }
 
 \newcommand{\@tristostiri}{%
   \begin{tikzpicture}[ucilnica]
-    % tabla
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
-    % sedezi
-    \foreach \vrsta in {-1,...,-5} {
-      \foreach \stolpec in {-4,-1,1,4}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {-3,-2,2,3}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-    }
+    \@sedezi{-1, ..., -5}{-3, -2, 2, 3}{-4, -1, 1, 4}
   \end{tikzpicture}%
 }
 
 \newcommand{\@tristosest}{%
   \begin{tikzpicture}[ucilnica]
-    % tabla
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
-    % sedezi
-    \foreach \stolpec in {-4,-2,0.25,4.75}
-      \draw (\stolpec, -1) node[sedez, dovoljen] {};
-    \foreach \stolpec in {-3,-1,1.75,3.25}
-      \draw (\stolpec, -1) node[sedez] {};
-    \foreach \vrsta in {-2,-3} {
-      \foreach \stolpec in {-4,-2,0,2,5}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {-3,-1,1,3,4}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-    }
+    \@sedezi{-1}{-3, -1, 1.75, 3.25}{-4, -2, 0.25, 4.75}
+    \@sedezi{-2, -3}{-3, -1, 1, 3, 4}{-4, -2, 0, 2, 5}
   \end{tikzpicture}%
 }
 
 \newcommand{\@tristodeset}{%
-  \begin{tikzpicture}[ucilnica]
-    % tabla
-    \draw[kateder] (-2.5,0) rectangle (-0.5,1);
-    % leva stran
-    \foreach \stolpec in {-2,-1} {
-      \foreach \vrsta in {-2,-4}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      \foreach \vrsta in {-1,-3,-5}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-    }
-    % desna stran
-    \foreach \stolpec in {1,2} {
-      \foreach \vrsta in {0,-2,-4}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      \foreach \vrsta in {-1,-3,-5}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-    }
+  \begin{tikzpicture}[ucilnica, rotate = 90, yscale = -1]
+    \draw[kateder] (0, -2.5) rectangle (1, -0.5);
+    \@sedezi{-2, -1}{-2,-4}{-1,-3,-5}
+    \@sedezi{1, 2}{0, -2,-4}{-1,-3,-5}
   \end{tikzpicture}%
 }
 
 \newcommand{\@tristoenajst}{%
-  \begin{tikzpicture}[ucilnica]
-    % tabla
-    \draw[kateder] (-2.5,0) rectangle (-0.5,1);
-    % leva stran
-    \foreach \stolpec in {-2,-1} {
-      \foreach \vrsta in {-1,-3,-5}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      \foreach \vrsta in {-2,-4,-6}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-    }
-    % desna stran
-    \foreach \stolpec in {1,2} {
-      \foreach \vrsta in {-1,-3,-5}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      \foreach \vrsta in {0,-2,...,-6}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-    }
+  \begin{tikzpicture}[ucilnica, rotate = 90, yscale = -1]
+    \draw[kateder] (0, -2.5) rectangle (1, -0.5);
+    \@sedezi{-2, -1}{-1, -3, -5}{-2, -4, -6}
+    \@sedezi{1, 2}{-1, -3, -5}{0, -2, -4, -6}
   \end{tikzpicture}%
 }
 
 \newcommand{\@tristodvanajst}{%
-  \begin{tikzpicture}[ucilnica]
-    % televizija
-    \draw[kateder] (-1,0) rectangle (1,0.55);
-    % leva stran
-    \foreach \stolpec in {1,2} {
-      \foreach \vrsta in {-2,-4,-6}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      \foreach \vrsta in {-1,-3,-5}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-    }
-    % desna stran
-    \foreach \vrsta in {-2.25,-4.75}
-      \draw (-1, \vrsta) node[sedez] {};
-    \foreach \vrsta in {-1,-3.5,-6}
-      \draw (-1, \vrsta) node[sedez, dovoljen] {};
+  \begin{tikzpicture}[ucilnica, rotate = 90, yscale = -1]
+    \draw[kateder] (0, -1) rectangle (0.55, 1);
+    \@sedezi{1, 2}{-2, -4, -6}{-1, -3, -5}
+    \@sedezi{-1}{-2.25,-4.75}{-1,-3.5,-6}
   \end{tikzpicture}%
 }
 
 \newcommand{\@fena}{%
   \begin{tikzpicture}[ucilnica]
-    % tabla
     \draw[kateder] (-4.3,0.4) rectangle (-2.7,-0.4);
-    \foreach \stolpec in {-2, 2, 4}
-        \draw (\stolpec, 0) node[sedez] {};
-    \foreach \stolpec in {-1, 3, 5}
-        \draw (\stolpec, 0) node[sedez, dovoljen] {};
-    % leva stran
-    \foreach \vrsta in {-1,...,-9} {
-      \foreach \stolpec in {-3,-2}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      \foreach \stolpec in {-4,-1}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-    }
-    % desna stran
-    \foreach \vrsta in {-1,...,-8} {
-      \foreach \stolpec in {2,4,6}
-        \draw (\stolpec, \vrsta) node[sedez] {};
-      \foreach \stolpec in {1,3,5}
-        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-    }
+    \@sedezi{0}{-2, 2, 4}{-1, 3, 5}
+    \@sedezi{-1,...,-9}{-3,-2}{-4,-1}
+    \@sedezi{-1,...,-8}{2, 4, 6}{1, 3, 5}
   \end{tikzpicture}%
 }
 
+\newcommand{\@mfp}{%
+  \begin{tikzpicture}[ucilnica]
+    \newcommand{\mfp@nedovsed}[3][]{
+      \draw[##1](##3, ##2) node[sedez] {};
+    }
+    \newcommand{\mfp@dovsed}[3][]{
+      \draw[##1](##3, ##2) node[sedez, dovoljen] {};
+    }
+    \newcommand{\mfp@sedez}{\@ifstar{\mfp@dovsed}{\mfp@nedovsed}}
+    \draw[kateder] (-5.5,0) rectangle (-2.5,1);
+    \@sedezi[\mfp@sedez]{-1,...,-11}{-4, -2}{-5, -3, -1}
+    \@sedezi[\mfp@sedez]{-1,...,-6}{2}{1, 3}
+    \@sedezi[\mfp@sedez]{-8,...,-11}{2}{1, 3}
+  \end{tikzpicture}%
+}
+
+\newcommand{\@vfp}{%
+  \begin{tikzpicture}[rotate = -90, yscale = -\x@velikostucilnice, xscale = \x@velikostucilnice]
+    \pgfmathsetmacro\vrsta{0}
+    \draw[kateder] (6,-4) rectangle (7,4);
+    \foreach \vrsta / \stran / \sredina in {
+      1/4/13, 2/4/14, 3/5/15, 4/5/16, 5/6/17, 6/6/18, 7/7/19, 8/7/20, 9/7/21,
+      10/8/22, 11/8/23, 12/9/23
+    } {
+      \pgfmathsetmacro\radij{10 + \vrsta}
+      \pgfmathsetmacro\dodatnia{\sredina - 3}
+      \pgfmathsetmacro\dodatnib{\sredina - 7}
+      \pgfmathsetmacro\sirina{\sredina / 2}
+      \foreach \stolpec in {1, ..., \stran} {
+        \draw(-35 - 20 / \stran * \stolpec:\radij) node[sedez] {};
+        \draw(35 + 20 / \stran * \stolpec:\radij) node[sedez] {};        
+      }
+      \foreach \stolpec in {1, \stran} {
+        \draw(-35 - 20 / \stran * \stolpec:\radij) node[sedez, dovoljen] {};
+        \draw(35 + 20 / \stran * \stolpec:\radij) node[sedez, dovoljen] {};        
+      }
+      \foreach \stolpec in {1, ..., \sredina}
+        \draw(-30 - 30 / \sredina + 60 / \sredina * \stolpec:\radij) node[sedez] {};
+      \foreach \stolpec in {1, 4, \dodatnia, \sredina}
+        \draw(-30 - 30 / \sredina + 60 / \sredina * \stolpec:\radij) node[sedez, dovoljen] {};
+      \@ifthen{\vrsta > 6}{
+        \foreach \stolpec in {8, \dodatnib}
+          \draw(-30 - 30 / \sredina + 60 / \sredina * \stolpec:\radij) node[sedez, dovoljen] {};
+        \draw(-35 - 20 / \stran * 4:\radij) node[sedez, dovoljen] {};
+        \draw(35 + 20 / \stran * 4:\radij) node[sedez, dovoljen] {};        
+      }
+    }    
+  \end{tikzpicture}
+}
 %------------------------------------------------------------------------(end)
