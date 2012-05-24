@@ -1,6 +1,6 @@
 %----------------------------------------------------------------------------%
 %                              Ideje za naprej
-%----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------(fold)
 % - dodatni list (\AtEndDocument)
 % - obrni stran
 % - lomljenje na koncu naloge pri vec nalogah na listu
@@ -8,9 +8,9 @@
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{izpit}[2010/10/06 Izpitne pole]
 
-%----------------------------------------------------------------------------%
+%------------------------------------------------------------------------(end)
 %                       Pomozni ukazi in spremenljivke
-%----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------(fold)
 
 % Nalozimo pakete, ki ponujajo enostavno programiranje.
 \RequirePackage{ifthen, keyval}
@@ -28,9 +28,9 @@
 \newboolean{@brezpaketov}         % Ali naj ne nalozimo dodatnih paketov?
 \newboolean{@sedeznired}          % Ali naj bo sedezni red natisnjen?
 
-%----------------------------------------------------------------------------%
+%------------------------------------------------------------------------(end)
 %                                   Opcije
-%----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------(fold)
 
 % V osnovi imamo celostranske naloge in vpisna polja
 \setboolean{@celostranske}{true}
@@ -61,9 +61,9 @@
 
 \ProcessOptions\relax
 
-%----------------------------------------------------------------------------%
+%------------------------------------------------------------------------(end)
 %                             Nalaganje paketov
-%----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------(fold)
 
 % Za osnovo si vzamemo article ter nalozimo pakete.
 \LoadClass[\@points]{article}
@@ -75,9 +75,9 @@
 \RequirePackage{geometry}
 \RequirePackage{tikz}
 
-%----------------------------------------------------------------------------%
-%                             Oblikovanje strani
-%----------------------------------------------------------------------------%
+%------------------------------------------------------------------------(end)
+%                                Dimenzije
+%-----------------------------------------------------------------------(fold)
 
 \geometry{
   a4paper,
@@ -88,14 +88,36 @@
 \parindent 1em
 \pagestyle{empty}
 
-%----------------------------------------------------------------------------%
+\def\v@predizpitom{-12mm}
+% presledki pred in za naslovi nalogami in podnalog
+\def\v@mednalogami{2em}
+\def\v@medpodnalogami{0.75em}
+\def\h@zapodnalogo{0.5em}
+\def\h@sirinaglave{\textwidth}
+\def\h@sirinanaslova{12cm}
+\def\h@sirinaucilnice{3.456cm}
+\def\v@visinaucilnice{2.4cm}
+\def\h@odmiktock{5mm}
+\def\v@predpraznoglavo{5mm}
+\def\v@predpodnaslovom{1mm}
+\def\v@predpravili{2mm}
+\def\v@predimenom{6mm}
+\def\v@predvpisno{6pt}
+\def\x@visinavpisne{0.7}
+\def\x@sirinavpisne{0.432}
+\def\x@visinaocene{\x@visinavpisne}
+\def\x@sirinaocene{\x@visinavpisne}
+\def\x@velikostucilnice{0.217}
+\def\h@velikostsedeza{4.5pt}
+
+%------------------------------------------------------------------------(end)
 %                                Vecjezicnost
-%----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------(fold)
 
 % \@sloeng vrne prvi argument v slovenskih in drugega v angleskih izpitih.
 \newcommand{\@sloeng}[2]{\ifthenelse{\boolean{@slovenski}}{#1}{#2}}
 
-\newcommand{\imepriimek@oznaka}{\@sloeng{Ime in priimek}{Name and surname}}
+\newcommand{\ime@oznaka}{\@sloeng{Ime in priimek}{Name and surname}}
 \newcommand{\vpisna@oznaka}{\@sloeng{Vpisna \v{s}tevilka}{Student ID}}
 \newcommand{\sedez@oznaka}{\@sloeng{Sede\v{z}}{Seat}}
 \newcommand{\naloga@oznaka}[1]{\@sloeng{#1. naloga}{Problem #1}}
@@ -114,21 +136,15 @@
   }%
 }
 
-%----------------------------------------------------------------------------%
+%------------------------------------------------------------------------(end)
 %                             Oblikovanje glave
-%----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------(fold)
 
 % Nastavimo možnosti, ki jih sprejme glava.
-\define@key{glava}{anglescina}[true]{
-  \setboolean{@slovenski}{false}
-}
-\define@key{glava}{sedezni red}[true]{
-  \tikzstyle{dovoljen} = [thin]
-}
-\define@key{glava}{naloge}{
-  \renewcommand{\stevilo@nalog}{#1}
-}
-\define@key{glava}{ucilnica}{
+\define@key{izpit}{anglescina}[true]{\setboolean{@slovenski}{false}}
+\define@key{izpit}{sedezni red}[true]{\tikzstyle{dovoljen} = [thin]}
+\define@key{izpit}{naloge}[4]{\def\stevilo@nalog{#1}}
+\define@key{izpit}{ucilnica}{
   \@ifthen{\equal{#1}{201}}{\nastavi@ucilnico{\@dvestoena}{2.01}}
   \@ifthen{\equal{#1}{202}}{\nastavi@ucilnico{\@dvestodva}{2.02}}
   \@ifthen{\equal{#1}{203}}{\nastavi@ucilnico{\@dvestotri}{2.03}}
@@ -138,26 +154,19 @@
   \@ifthen{\equal{#1}{305}}{\nastavi@ucilnico{\@tristostiri}{3.05}}
   \@ifthen{\equal{#1}{306}}{\nastavi@ucilnico{\@tristosest}{3.06}}
   \@ifthen{\equal{#1}{307}}{\nastavi@ucilnico{\@tristosest}{3.07}}
+  \@ifthen{\equal{#1}{310}}{\nastavi@ucilnico{\@tristodeset}{3.10}}
+  \@ifthen{\equal{#1}{311}}{\nastavi@ucilnico{\@tristoenajst}{3.11}}
+  \@ifthen{\equal{#1}{312}}{\nastavi@ucilnico{\@tristodvanajst}{3.12}}
   \setboolean{@sedeznired}{true}
 }
 
 \newcommand{\nastavi@ucilnico}[2]{
-  \renewcommand{\ucilnica@polje}{#1}%
-  \renewcommand{\ucilnica@oznaka}{\sedez@oznaka\ (#2)}%
+  \def\ucilnica@polje{#1}%
+  \def\ucilnica@oznaka{\sedez@oznaka\ (#2)}%
 }
-\newcommand{\@oznaka}[2]{\vbox{#1\vskip -4pt{\footnotesize #2}}}
-
-\tikzstyle{dovoljen} = [very thin]
-\tikzstyle{sedez} = [circle, draw, very thin, inner sep=0pt, minimum width=4pt]
-\tikzstyle{kateder} = [very thin]
 
 % Pripravimo spremenljivke, ki bodo shranile lastnosti glave.
-\newcommand{\@naslov}{}
-\newcommand{\@podnaslov}{}
-\newcommand{\@pravila}{}
-\newcommand{\stevilo@nalog}{4}
-\newcommand{\ucilnica@polje}{}
-\newcommand{\ucilnica@oznaka}{}
+\def\stevilo@nalog{4}
 
 % Ukaz za izpis glave izpita.
 \newcommand{\izpit}[4][]{%
@@ -167,72 +176,76 @@
   % Obravnavamo argumente, v katerih so meta-podatki o izpitu.
   \setboolean{@slovenski}{true}%
   \setboolean{@sedeznired}{false}%
-  \setkeys{glava}{#1}%
-  \renewcommand{\@naslov}{#2}%
-  \renewcommand{\@podnaslov}{#3}%
-  \renewcommand{\@pravila}{#4}%
+  \setkeys{izpit}{#1}%
+  \def\@naslov{#2}%
+  \def\@podnaslov{#3}%
+  \def\@pravila{#4}%
   % Naslednja naloga pride na isto stran kot glava
   \setboolean{@dodana}{true}%
-  \natisniglavo
+  \@natisniizpit
 }
 
+\newcommand{\@navodila}{
+  \raggedright
+  \textbf{\@naslov}
+  \vskip \v@predpodnaslovom
+  \@podnaslov
+  \vskip \v@predpravili
+  \small\@pravila
+}
+
+\newcommand{\@oznaka}[2]{\vbox{#1\vskip -4pt{\footnotesize #2}}}
+
 % Natisnemo glavo izpita.
-\newcommand{\natisniglavo}{%
-  \vspace*{-12mm}
+\newcommand{\@natisniizpit}{%
+  \vspace*{\v@predizpitom}
   \noindent%
-  \parbox[b]{16cm}{%
+  \parbox[b]{\h@sirinaglave}{%
   \noindent%
   \ifthenelse{\boolean{@vpisnapolja}}{%
-    \parbox[b]{12cm}{%
-      \textbf{\@naslov}
-      \vskip 1mm
-      \@podnaslov
-      \vskip 2mm
-      {\small\@pravila}
-      \vskip 5mm
-      \@oznaka{\imepriimek@polje}{\imepriimek@oznaka}
+    \parbox[b]{\h@sirinanaslova}{%
+      \@navodila
+      \vskip \v@predimenom
+      \@oznaka{\ime@polje}{\ime@oznaka}
     }%
     \hfill%
-    \parbox[b]{3.5cm}{%
+    \parbox[b]{\h@sirinaucilnice}{%
       \@ifthen{\boolean{@sedeznired}}{%
-        \parbox[b][2.4cm]{3.5cm}{\@oznaka{\ucilnica@polje}{\ucilnica@oznaka}}%
-        \vskip 6pt%
+        \parbox[b][\v@visinaucilnice]{\h@sirinaucilnice}{%
+          \@oznaka{\ucilnica@polje}{\ucilnica@oznaka}%
+        }%
+        \vskip \v@predvpisno%
       }%
       \@oznaka{\vpisna@polje}{\vpisna@oznaka}%
     }%
-  \@ifthen{\stevilo@nalog > -1 \and \boolean{@vpisnapolja}}{%
-    \def\@tempsize{3cm}%
+  \@ifthen{\stevilo@nalog > -1}{%
+    \def\@tempsize{3.5cm}%
     \ifcase\stevilo@nalog%
-      \def\@tempsize{0.6cm}\or%
-      \def\@tempsize{1.2cm}\or%
-      \def\@tempsize{1.8cm}\or%
-      \def\@tempsize{2.4cm}\fi%
-    \rlap{\hspace{5mm}%
+      \def\@tempsize{0.7cm}\or%
+      \def\@tempsize{1.4cm}\or%
+      \def\@tempsize{2.1cm}\or%
+      \def\@tempsize{2.8cm}\fi%
+    \rlap{\hspace{\h@odmiktock}%
       \raisebox{\@tempsize}{\vbox to 9.75pt{%
         \ocene@polje{\stevilo@nalog}%
       }}%
     }%
   }%
   }{%
-    \vskip 5mm
-    \raggedright
-    \textbf{\@naslov}
-    \vskip 1mm
-    \@podnaslov
-    \vskip 2mm
-    {\small\@pravila}
+    \vskip \v@predpraznoglavo
+    \@navodila
   }%
   }%
   
-  \addvspace{2em}
+  \addvspace{\v@mednalogami}
   \@afterindentfalse%
   \@afterheading%
 }
 
 
-%----------------------------------------------------------------------------%
+%------------------------------------------------------------------------(end)
 %                             Oblikovanje nalog
-%----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------(fold)
 
 % Nastavimo stevec nalog.
 \newcounter{naloga}
@@ -249,11 +262,11 @@
 
 % Oblika naloge
 \newcommand{\oblikanaloge}[2]{%
-  \addvspace{2em}%
+  \addvspace{\v@mednalogami}%
   \filbreak%
   \noindent%
   \textbf{#1#2}%
-  \par\addvspace{0.75em}%
+  \par\addvspace{\v@medpodnalogami}%
   \@afterindentfalse%
   \@afterheading%
 }
@@ -286,9 +299,9 @@
   \naloga%
 }
 
-%----------------------------------------------------------------------------%
+%------------------------------------------------------------------------(end)
 %                             Oblikovanje podnalog
-%----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------(fold)
 
 % Nastavimo stevec podnalog, ki se resetira z vsako nalogo.
 \newcounter{podnaloga}[naloga]
@@ -305,11 +318,11 @@
 
 % Oblika podnaloge
 \newcommand{\oblikapodnaloge}[2]{%
-  \addvspace{0.75em}%
+  \addvspace{\v@medpodnalogami}%
   \vfil\penalty-150\vfilneg\par%
   \noindent%
   \textbf{#1#2}%
-  \hspace{0.5em}%
+  \hspace{\h@zapodnalogo}%
 }
 
 % Ukaz za izpis nalog, ki je skupen vsem oblikam podnalog.
@@ -342,24 +355,29 @@
   \dodatek{\vspace{\stretch{#1}}}
 }
 
-%----------------------------------------------------------------------------%
+%------------------------------------------------------------------------(end)
 %                                   Slike
-%----------------------------------------------------------------------------%
+%-----------------------------------------------------------------------(fold)
+
+\tikzstyle{dovoljen} = [very thin]
+\tikzstyle{sedez} = [circle, draw, very thin, inner sep=0pt, minimum width=\h@velikostsedeza]
+\tikzstyle{kateder} = [very thin]
+\tikzstyle{ucilnica} = [scale=\x@velikostucilnice]
 
 \newcommand{\vpisna@polje}{%
   \begin{tikzpicture}
-    \draw[xscale=0.4, yscale=0.6, very thin] (0, 0) grid (8, 1);%
+    \draw[xscale=\x@sirinavpisne, yscale=\x@visinavpisne, very thin] (0, 0) grid (8, 1);%
   \end{tikzpicture}%
 }
 
-\newcommand{\imepriimek@polje}{%
+\newcommand{\ime@polje}{%
   \begin{tikzpicture}
-    \draw[very thin] (0, 0) -- (12, 0);%
+    \draw[very thin] (0, 0) -- (\h@sirinanaslova, 0);%
   \end{tikzpicture}%
 }
 
 \newcommand{\ocene@polje}[1]{%
-  \begin{tikzpicture}[xscale=0.6, yscale=-0.6]
+  \begin{tikzpicture}[xscale=\x@sirinaocene, yscale=-\x@visinaocene]
     \draw[very thin] (0, -1) grid (1, #1);
     \@ifthen{\not \equal{#1}{0}} {
       \foreach \naloga in {1, ..., #1}
@@ -371,7 +389,7 @@
 }
 
 \newcommand{\@dvestoena}{%
-  \begin{tikzpicture}[scale=0.2]
+  \begin{tikzpicture}[ucilnica]
     % tabla
     \draw[kateder] (-4,0) rectangle (4,1);
     % sedezi
@@ -400,7 +418,7 @@
 }
 
 \newcommand{\@dvestodva}{%
-  \begin{tikzpicture}[scale=0.2]
+  \begin{tikzpicture}[ucilnica]
     % tabla
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
     % leva stran
@@ -421,7 +439,7 @@
 }
 
 \newcommand{\@dvestotri}{%
-  \begin{tikzpicture}[scale=0.2]
+  \begin{tikzpicture}[ucilnica]
     % tabla
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
     % sedezi
@@ -435,7 +453,7 @@
 }
 
 \newcommand{\@dvestopet}{%
-  \begin{tikzpicture}[scale=0.2]
+  \begin{tikzpicture}[ucilnica]
     % tabla
     \draw[kateder] (-4,0) rectangle (4,1);
     % sedezi
@@ -464,7 +482,7 @@
 }
 
 \newcommand{\@tristostiri}{%
-  \begin{tikzpicture}[scale=0.2]
+  \begin{tikzpicture}[ucilnica]
     % tabla
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
     % sedezi
@@ -478,7 +496,7 @@
 }
 
 \newcommand{\@tristosest}{%
-  \begin{tikzpicture}[scale=0.2]
+  \begin{tikzpicture}[ucilnica]
     % tabla
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
     % sedezi
@@ -496,7 +514,7 @@
 }
 
 \newcommand{\@tristodeset}{%
-  \begin{tikzpicture}[scale=0.2]
+  \begin{tikzpicture}[ucilnica]
     % tabla
     \draw[kateder] (-2.5,0) rectangle (-0.5,1);
     % leva stran
@@ -517,7 +535,7 @@
 }
 
 \newcommand{\@tristoenajst}{%
-  \begin{tikzpicture}[scale=0.2]
+  \begin{tikzpicture}[ucilnica]
     % tabla
     \draw[kateder] (-2.5,0) rectangle (-0.5,1);
     % leva stran
@@ -538,7 +556,7 @@
 }
 
 \newcommand{\@tristodvanajst}{%
-  \begin{tikzpicture}[scale=0.2]
+  \begin{tikzpicture}[ucilnica]
     % televizija
     \draw[kateder] (-1,0) rectangle (1,0.55);
     % leva stran
@@ -556,3 +574,4 @@
   \end{tikzpicture}%
 }
 
+%------------------------------------------------------------------------(end)
