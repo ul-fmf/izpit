@@ -107,8 +107,8 @@
 \def\x@sirinavpisne{0.432}
 \def\x@visinaocene{\x@visinavpisne}
 \def\x@sirinaocene{\x@visinavpisne}
-\def\x@velikostucilnice{0.217}
-\def\h@velikostsedeza{4.5pt}
+\def\x@velikostucilnice{0.15}
+\def\h@velikostsedeza{3.1pt}
 
 %------------------------------------------------------------------------(end)
 %                                Vecjezicnost
@@ -142,7 +142,7 @@
 
 % Nastavimo možnosti, ki jih sprejme glava.
 \define@key{izpit}{anglescina}[true]{\setboolean{@slovenski}{false}}
-\define@key{izpit}{sedezni red}[true]{\tikzstyle{dovoljen} = [thin]}
+\define@key{izpit}{sedezni red}[true]{\tikzstyle{dovoljen} = [fill=black!20]}
 \define@key{izpit}{naloge}[4]{\def\stevilo@nalog{#1}}
 \define@key{izpit}{ucilnica}{
   \@ifthen{\equal{#1}{201}}{\nastavi@ucilnico{\@dvestoena}{2.01}}
@@ -360,9 +360,9 @@
 %                                   Slike
 %-----------------------------------------------------------------------(fold)
 
-\tikzstyle{dovoljen} = [very thin]
+\tikzstyle{dovoljen} = []
 \tikzstyle{sedez} = [circle, draw, ultra thin, inner sep=0pt, minimum width=\h@velikostsedeza]
-\tikzstyle{kateder} = [very thin]
+\tikzstyle{kateder} = [ultra thin]
 \tikzstyle{ucilnica} = [scale=\x@velikostucilnice]
 
 \newcommand{\vpisna@polje}{%
@@ -385,8 +385,8 @@
       \foreach \naloga in {1, ..., #1}
          \draw[yshift=-1.5cm] (0, \naloga) node[left]{\small \naloga};
       \draw[very thick, yshift=-1cm] (0, #1) -- (1, #1);
-      \draw[yshift=-0.5cm] (0, #1) node[left]{\small $\Sigma$};
     }
+    \draw[yshift=-0.5cm] (0, #1) node[left]{\small $\Sigma$};
   \end{tikzpicture}%
 }
 
