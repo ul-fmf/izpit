@@ -20,6 +20,34 @@
 \newcommand{\@unless}[2]{\ifthenelse{#1}{\relax}{#2}}
 \newcommand{\@blank}[1]{\equal{#1}{}}
 
+% Zastareli ukazi
+\newcommand{\@oldcommand}[2]{
+  \newcommand{#1}{
+    \AtEndDocument{%
+      \PackageWarningNoLine{izpit}{%
+        Ukaz \protect#1\space je zastarel.\MessageBreak
+        Uporabite ukaz \protect#2%
+      }%
+    }%
+    #2%
+  }
+}
+\newcommand{\@oldoption}[2]{
+  \DeclareOption{#1}{
+    \AtEndDocument{%
+      \PackageWarningNoLine{izpit}{%
+        Možnost \protect#1\space je zastarela.\MessageBreak
+        Uporabite možnost \protect#2%
+      }%
+    }%
+    \ExecuteOptions{#2}%
+  }
+}
+\@oldcommand{\dodatnanaloga}{\naloga*}
+\@oldcommand{\glava}{\izpit}
+\@oldoption{list}{arhiv}
+\@oldoption{cp1250}{sumniki}
+
 % Definiramo pomozne spremenljivke.
 \newboolean{@celostranske}        % Bodo naloge celostranske?
 \newboolean{@vpisnapolja}         % Naj bodo na izpitu polja za podatke?
@@ -274,7 +302,7 @@
 
 % Ukaz za izpis nalog, ki je skupen vsem oblikam nalog.
 % Kot neobvezni argument sprejme stevilo tock.
-\newcommand{\naloga}[1][]{%
+\newcommand{\naloga@novastran}[1][]{%
   % Najprej povecamo stevec naloge.
   \stepcounter{naloga}%
   % Ce so naloge celostranske in naloga ni dodana, naredimo novo stran.
@@ -295,10 +323,12 @@
 }
 
 % Ce je naloga dodatna, je ne dodamo na novo stran. Ostalo ostane enako.
-\newcommand{\dodatnanaloga}{%
+\newcommand{\naloga@istastran}{%
   \setboolean{@dodana}{true}%
   \naloga%
 }
+
+\newcommand{\naloga}{\@ifstar{\naloga@istastran}{\naloga@novastran}}
 
 %------------------------------------------------------------------------(end)
 %                             Oblikovanje podnalog
@@ -390,13 +420,11 @@
   \end{tikzpicture}%
 }
 
-\newcommand{\@nedovsed}[3][]{\draw[#1](#3, #2) node[sedez] {};}
-\newcommand{\@dovsed}[3][]{\draw[#1](#3, #2) node[sedez, dovoljen] {};}
-\newcommand{\@sedez}{\@ifstar{\@dovsed}{\@nedovsed}}
+\newcommand{\@sedez}[3][]{\draw[#1](#3, #2)}
 \newcommand{\@sedezi}[4][\@sedez]{
   \foreach \i in {#2} {
-    \foreach \j in {#3} {#1{\i}{\j}}
-    \foreach \j in {#4} {#1*{\i}{\j}}
+    \foreach \j in {#3} {#1{\i}{\j} node[sedez] {};}
+    \foreach \j in {#4} {#1{\i}{\j} node[sedez, dovoljen] {};}
   }
 }
 
@@ -405,20 +433,12 @@
     \draw[kateder] (-4,0) rectangle (4,1);
     \@sedezi{-1, ..., -6}{-2.5, -1.5, -0.5, 1.5, 2.5}{-3.5, 0.5, 3.5}
 
-    \newcommand{\l@nedovsed}[2]{%
-      \@nedovsed[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}%
+    \newcommand{\l@sedez}[2]{
+      \@sedez[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}
     }
-    \newcommand{\l@dovsed}[2]{%
-      \@dovsed[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}%
+    \newcommand{\d@sedez}[2]{
+      \@sedez[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}
     }
-    \newcommand{\d@nedovsed}[2]{%
-      \@nedovsed[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}%
-    }
-    \newcommand{\d@dovsed}[2]{%
-      \@dovsed[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}%
-    }
-    \newcommand{\l@sedez}{\@ifstar{\l@dovsed}{\l@nedovsed}}
-    \newcommand{\d@sedez}{\@ifstar{\d@dovsed}{\d@nedovsed}}
     \@sedezi[\l@sedez]{-1, ..., -6}{-6.5, -5.5}{-7.5, -4.5}
     \@sedezi[\d@sedez]{-1, ..., -6}{6.5, 5.5}{7.5, 4.5}
   \end{tikzpicture}%
@@ -444,20 +464,12 @@
     \draw[kateder] (-4,0) rectangle (4,1);
     \@sedezi{-1, ..., -7}{-2.5, -1.5, -0.5, 1.5, 2.5}{-3.5, 0.5, 3.5}
 
-    \newcommand{\l@nedovsed}[2]{%
-      \@nedovsed[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}%
+    \newcommand{\l@sedez}[2]{
+      \@sedez[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}
     }
-    \newcommand{\l@dovsed}[2]{%
-      \@dovsed[xshift = -0.5cm, rotate around = {-30:(-4.5, ##1)}]{##1}{##2}%
+    \newcommand{\d@sedez}[2]{
+      \@sedez[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}
     }
-    \newcommand{\d@nedovsed}[2]{%
-      \@nedovsed[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}%
-    }
-    \newcommand{\d@dovsed}[2]{%
-      \@dovsed[xshift = 0.5cm, rotate around = {30:(4.5, ##1)}]{##1}{##2}%
-    }
-    \newcommand{\l@sedez}{\@ifstar{\l@dovsed}{\l@nedovsed}}
-    \newcommand{\d@sedez}{\@ifstar{\d@dovsed}{\d@nedovsed}}
     \@sedezi[\l@sedez]{-1, ..., -7}{-6.5, -5.5}{-7.5, -4.5}
     \@sedezi[\d@sedez]{-1, ..., -7}{6.5, 5.5}{7.5, 4.5}
   \end{tikzpicture}%
@@ -513,17 +525,10 @@
 
 \newcommand{\@mfp}{%
   \begin{tikzpicture}[ucilnica]
-    \newcommand{\mfp@nedovsed}[3][]{
-      \draw[##1](##3, ##2) node[sedez] {};
-    }
-    \newcommand{\mfp@dovsed}[3][]{
-      \draw[##1](##3, ##2) node[sedez, dovoljen] {};
-    }
-    \newcommand{\mfp@sedez}{\@ifstar{\mfp@dovsed}{\mfp@nedovsed}}
     \draw[kateder] (-5.5,0) rectangle (-2.5,1);
-    \@sedezi[\mfp@sedez]{-1,...,-11}{-4, -2}{-5, -3, -1}
-    \@sedezi[\mfp@sedez]{-1,...,-6}{2}{1, 3}
-    \@sedezi[\mfp@sedez]{-8,...,-11}{2}{1, 3}
+    \@sedezi{-1,...,-11}{-4, -2}{-5, -3, -1}
+    \@sedezi{-1,...,-6}{2}{1, 3}
+    \@sedezi{-8,...,-11}{2}{1, 3}
   \end{tikzpicture}%
 }
 
