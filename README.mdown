@@ -1,0 +1,10 @@
+izpit.cls
+=========
+
+Da bi olajšal sestavljanje izpitnih pol, sem pripravil LaTeXovski paket,
+ki veliko večino dela postori sam. Vse, kar morate podati, so podatki o izpitu
+(ime, datum, navodila in učilnico) ter naloge.
+
+Paket nato avtomatsko oblikuje glavo izpita, sedežni red, polja za ime, vpisno
+številko in točke ter podobno. Poleg tega vam omogoča, da za vsak izpit
+pripravite tako verzijo za reševanje na polo kot verzijo za objavo v arhivu.
