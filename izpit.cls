@@ -134,8 +134,10 @@
   \@ifthen{\equal{#1}{203}}{\nastavi@ucilnico{\@dvestotri}{2.03}}
   \@ifthen{\equal{#1}{204}}{\nastavi@ucilnico{\@dvestotri}{2.04}}
   \@ifthen{\equal{#1}{205}}{\nastavi@ucilnico{\@dvestopet}{2.05}}
-  \@ifthen{\equal{#1}{304}}{\nastavi@ucilnico{\@dvestotri}{3.04}}
-  \@ifthen{\equal{#1}{305}}{\nastavi@ucilnico{\@dvestotri}{3.05}}
+  \@ifthen{\equal{#1}{304}}{\nastavi@ucilnico{\@tristostiri}{3.04}}
+  \@ifthen{\equal{#1}{305}}{\nastavi@ucilnico{\@tristostiri}{3.05}}
+  \@ifthen{\equal{#1}{306}}{\nastavi@ucilnico{\@tristosest}{3.06}}
+  \@ifthen{\equal{#1}{307}}{\nastavi@ucilnico{\@tristosest}{3.07}}
   \setboolean{@sedeznired}{true}
 }
 
@@ -393,7 +395,7 @@
 }
 
 \newcommand{\@dvestodva}{%
-  \begin{tikzpicture}[scale=0.19]
+  \begin{tikzpicture}[scale=0.2]
     % tabla
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
     % leva stran
@@ -419,9 +421,9 @@
     \draw[kateder] (-4.5,0) rectangle (-0.5,1);
     % sedezi
     \foreach \vrsta in {-1,...,-5} {
-      \foreach \stolpec in {-4,-1,1,4}
+      \foreach \stolpec in {-4,-2,1,3,5}
         \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
-      \foreach \stolpec in {-3,-2,2,3}
+      \foreach \stolpec in {-3,-1,2,4}
         \draw (\stolpec, \vrsta) node[sedez] {};
     }
   \end{tikzpicture}%
@@ -453,6 +455,99 @@
         \draw[xshift = 0.5cm, rotate around = {30:(4.5, \vrsta)}]
           (\stolpec, \vrsta) node[sedez] {};
     }
+  \end{tikzpicture}%
+}
+
+\newcommand{\@tristostiri}{%
+  \begin{tikzpicture}[scale=0.2]
+    % tabla
+    \draw[kateder] (-4.5,0) rectangle (-0.5,1);
+    % sedezi
+    \foreach \vrsta in {-1,...,-5} {
+      \foreach \stolpec in {-4,-1,1,4}
+        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
+      \foreach \stolpec in {-3,-2,2,3}
+        \draw (\stolpec, \vrsta) node[sedez] {};
+    }
+  \end{tikzpicture}%
+}
+
+\newcommand{\@tristosest}{%
+  \begin{tikzpicture}[scale=0.2]
+    % tabla
+    \draw[kateder] (-4.5,0) rectangle (-0.5,1);
+    % sedezi
+    \foreach \stolpec in {-4,-2,0.25,4.75}
+      \draw (\stolpec, -1) node[sedez, dovoljen] {};
+    \foreach \stolpec in {-3,-1,1.75,3.25}
+      \draw (\stolpec, -1) node[sedez] {};
+    \foreach \vrsta in {-2,-3} {
+      \foreach \stolpec in {-4,-2,0,2,5}
+        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
+      \foreach \stolpec in {-3,-1,1,3,4}
+        \draw (\stolpec, \vrsta) node[sedez] {};
+    }
+  \end{tikzpicture}%
+}
+
+\newcommand{\@tristodeset}{%
+  \begin{tikzpicture}[scale=0.2]
+    % tabla
+    \draw[kateder] (-2.5,0) rectangle (-0.5,1);
+    % leva stran
+    \foreach \stolpec in {-2,-1} {
+      \foreach \vrsta in {-2,-4}
+        \draw (\stolpec, \vrsta) node[sedez] {};
+      \foreach \vrsta in {-1,-3,-5}
+        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
+    }
+    % desna stran
+    \foreach \stolpec in {1,2} {
+      \foreach \vrsta in {0,-2,-4}
+        \draw (\stolpec, \vrsta) node[sedez] {};
+      \foreach \vrsta in {-1,-3,-5}
+        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
+    }
+  \end{tikzpicture}%
+}
+
+\newcommand{\@tristoenajst}{%
+  \begin{tikzpicture}[scale=0.2]
+    % tabla
+    \draw[kateder] (-2.5,0) rectangle (-0.5,1);
+    % leva stran
+    \foreach \stolpec in {-2,-1} {
+      \foreach \vrsta in {-1,-3,-5}
+        \draw (\stolpec, \vrsta) node[sedez] {};
+      \foreach \vrsta in {-2,-4,-6}
+        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
+    }
+    % desna stran
+    \foreach \stolpec in {1,2} {
+      \foreach \vrsta in {-1,-3,-5}
+        \draw (\stolpec, \vrsta) node[sedez] {};
+      \foreach \vrsta in {0,-2,...,-6}
+        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
+    }
+  \end{tikzpicture}%
+}
+
+\newcommand{\@tristodvanajst}{%
+  \begin{tikzpicture}[scale=0.2]
+    % televizija
+    \draw[kateder] (-1,0) rectangle (1,0.55);
+    % leva stran
+    \foreach \stolpec in {1,2} {
+      \foreach \vrsta in {-2,-4,-6}
+        \draw (\stolpec, \vrsta) node[sedez] {};
+      \foreach \vrsta in {-1,-3,-5}
+        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
+    }
+    % desna stran
+    \foreach \vrsta in {-2.25,-4.75}
+      \draw (-1, \vrsta) node[sedez] {};
+    \foreach \vrsta in {-1,-3.5,-6}
+      \draw (-1, \vrsta) node[sedez, dovoljen] {};
   \end{tikzpicture}%
 }
 
