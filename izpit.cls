@@ -223,6 +223,10 @@
     {\small\@pravila}
   }%
   }%
+  
+  \addvspace{2em}
+  \@afterindentfalse%
+  \@afterheading%
 }
 
 
@@ -245,8 +249,8 @@
 
 % Oblika naloge
 \newcommand{\oblikanaloge}[2]{%
-  \filbreak%
   \addvspace{2em}%
+  \filbreak%
   \noindent%
   \textbf{#1#2}%
   \par\addvspace{0.75em}%
@@ -301,7 +305,8 @@
 
 % Oblika podnaloge
 \newcommand{\oblikapodnaloge}[2]{%
-  \addvspace{0.75em}\vfil\penalty-150\vfilneg\par%
+  \addvspace{0.75em}%
+  \vfil\penalty-150\vfilneg\par%
   \noindent%
   \textbf{#1#2}%
   \hspace{0.5em}%
