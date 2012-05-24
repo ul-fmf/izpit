@@ -157,6 +157,7 @@
   \@ifthen{\equal{#1}{310}}{\nastavi@ucilnico{\@tristodeset}{3.10}}
   \@ifthen{\equal{#1}{311}}{\nastavi@ucilnico{\@tristoenajst}{3.11}}
   \@ifthen{\equal{#1}{312}}{\nastavi@ucilnico{\@tristodvanajst}{3.12}}
+  \@ifthen{\equal{#1}{F1}}{\nastavi@ucilnico{\@fena}{F1}}
   \setboolean{@sedeznired}{true}
 }
 
@@ -360,7 +361,7 @@
 %-----------------------------------------------------------------------(fold)
 
 \tikzstyle{dovoljen} = [very thin]
-\tikzstyle{sedez} = [circle, draw, very thin, inner sep=0pt, minimum width=\h@velikostsedeza]
+\tikzstyle{sedez} = [circle, draw, ultra thin, inner sep=0pt, minimum width=\h@velikostsedeza]
 \tikzstyle{kateder} = [very thin]
 \tikzstyle{ucilnica} = [scale=\x@velikostucilnice]
 
@@ -571,6 +572,31 @@
       \draw (-1, \vrsta) node[sedez] {};
     \foreach \vrsta in {-1,-3.5,-6}
       \draw (-1, \vrsta) node[sedez, dovoljen] {};
+  \end{tikzpicture}%
+}
+
+\newcommand{\@fena}{%
+  \begin{tikzpicture}[ucilnica]
+    % tabla
+    \draw[kateder] (-4.3,0.4) rectangle (-2.7,-0.4);
+    \foreach \stolpec in {-2, 2, 4}
+        \draw (\stolpec, 0) node[sedez] {};
+    \foreach \stolpec in {-1, 3, 5}
+        \draw (\stolpec, 0) node[sedez, dovoljen] {};
+    % leva stran
+    \foreach \vrsta in {-1,...,-9} {
+      \foreach \stolpec in {-3,-2}
+        \draw (\stolpec, \vrsta) node[sedez] {};
+      \foreach \stolpec in {-4,-1}
+        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
+    }
+    % desna stran
+    \foreach \vrsta in {-1,...,-8} {
+      \foreach \stolpec in {2,4,6}
+        \draw (\stolpec, \vrsta) node[sedez] {};
+      \foreach \stolpec in {1,3,5}
+        \draw (\stolpec, \vrsta) node[sedez, dovoljen] {};
+    }
   \end{tikzpicture}%
 }
 
