@@ -124,6 +124,7 @@
 \def\h@sirinaglave{\textwidth}
 \def\h@sirinanaslova{12cm}
 \def\h@sirinaucilnice{3.456cm}
+\def\h@sirinaimena{11cm}
 \def\v@visinaucilnice{2.4cm}
 \def\h@odmiktock{5mm}
 \def\v@predpraznoglavo{5mm}
@@ -404,7 +405,7 @@
 
 \newcommand{\ime@polje}{%
   \begin{tikzpicture}
-    \draw[very thin] (0, 0) -- (\h@sirinanaslova, 0);%
+    \draw[very thin] (0, 0) -- (\h@sirinaimena, 0);%
   \end{tikzpicture}%
 }
 
