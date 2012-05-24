@@ -1,5 +1,5 @@
-izpit.cls
-=========
+Sestavljanje izpitnih pol
+=========================
 
 Da bi olajšal sestavljanje izpitnih pol, sem pripravil LaTeXovski paket,
 ki veliko večino dela postori sam. Vse, kar morate podati, so podatki o izpitu
