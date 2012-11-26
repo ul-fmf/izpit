@@ -1,9 +1,3 @@
-syntax: glob
-
 .DS_Store
-*.aux
-*.log
-*.fdb_latexmk
-*.pdf
-vzorec-*
-izpit.zip
+vzorec.*
+!vzorec.tex
