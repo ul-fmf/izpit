@@ -243,7 +243,10 @@
     \parbox[b]{\h@sirinanaslova}{%
       \@navodila
       \vskip \v@predimenom
-      \@oznaka{\ime@polje}{\ime@oznaka}
+      \begin{tikzpicture}
+        \draw[very thin] (0, 0) -- (\h@sirinaimena, 0);%
+        \draw[overlay] (0, 0) node[below right=0pt, inner xsep=0pt] {\footnotesize \ime@oznaka};
+      \end{tikzpicture}
     }%
     \hfill%
     \parbox[b]{\h@sirinaucilnice}{%
@@ -251,7 +254,11 @@
         \@oznaka{\hfill\llap{\ucilnica@polje}}{\hfill\ucilnica@oznaka}%
         \vskip \v@predvpisno%
       }%
-      \@oznaka{\vpisna@polje}{\hfill\vpisna@oznaka}%
+      \begin{tikzpicture}
+        \draw[xscale=\x@sirinavpisne, yscale=\x@visinavpisne, very thin]
+          (0, 0) grid (8, 1);%
+        \draw[overlay, xscale=\x@sirinavpisne] (8, 0) node[below left=0pt, inner xsep=0pt] {\footnotesize \vpisna@oznaka};
+      \end{tikzpicture}
     }%
   \@ifthen{\stevilo@nalog > -1}{%
     \def\@tempsize{3.5cm}%
@@ -261,8 +268,18 @@
       \def\@tempsize{2.1cm}\or%
       \def\@tempsize{2.8cm}\fi%
     \rlap{\hspace{\h@odmiktock}%
-      \raisebox{\@tempsize}{\vbox to 9.75pt{%
-        \ocene@polje{\stevilo@nalog}%
+      \raisebox{\@tempsize}{\vbox to 0pt{%
+        \parbox[b]{\x@sirinaocene cm}{%
+          \begin{tikzpicture}[xscale=\x@sirinaocene, yscale=-\x@visinaocene]
+            \draw[very thin] (0, -1) grid (1, \stevilo@nalog);
+            \@ifthen{\not \equal{\stevilo@nalog}{0}} {
+              \foreach \naloga in {1, ..., \stevilo@nalog}
+                 \draw[yshift=-1.5cm] (0, \naloga) node[left]{\small \naloga};
+              \draw[very thick, yshift=-1cm] (0, \stevilo@nalog) -- (1, \stevilo@nalog);
+            }
+            \draw[yshift=-0.5cm] (0, \stevilo@nalog) node[left]{\small $\Sigma$};
+          \end{tikzpicture}%
+        }%
       }}%
     }%
   }%
@@ -400,31 +417,6 @@
 \tikzstyle{sedez} = [circle, draw, ultra thin, inner sep=0pt, minimum width=\h@velikostsedeza]
 \tikzstyle{kateder} = [ultra thin]
 \tikzstyle{ucilnica} = [scale=\x@velikostucilnice]
-
-\newcommand{\vpisna@polje}{%
-  \begin{tikzpicture}
-    \draw[xscale=\x@sirinavpisne, yscale=\x@visinavpisne, very thin]
-      (0, 0) grid (8, 1);%
-  \end{tikzpicture}%
-}
-
-\newcommand{\ime@polje}{%
-  \begin{tikzpicture}
-    \draw[very thin] (0, 0) -- (\h@sirinaimena, 0);%
-  \end{tikzpicture}%
-}
-
-\newcommand{\ocene@polje}[1]{%
-  \begin{tikzpicture}[xscale=\x@sirinaocene, yscale=-\x@visinaocene]
-    \draw[very thin] (0, -1) grid (1, #1);
-    \@ifthen{\not \equal{#1}{0}} {
-      \foreach \naloga in {1, ..., #1}
-         \draw[yshift=-1.5cm] (0, \naloga) node[left]{\small \naloga};
-      \draw[very thick, yshift=-1cm] (0, #1) -- (1, #1);
-    }
-    \draw[yshift=-0.5cm] (0, #1) node[left]{\small $\Sigma$};
-  \end{tikzpicture}%
-}
 
 \newcommand{\@sedez}[3][]{\draw[#1](#3, #2)}
 \newcommand{\@sedezi}[4][\@sedez]{
