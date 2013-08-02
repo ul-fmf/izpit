@@ -10,8 +10,11 @@
 % - brezpaketov:
 %     Prepreči nalaganje paketov amsmath, amssym, babel in inputenc. To
 %     možnost uporabite, če je kakšen od teh paketov v konfliktu z vašimi.
+%     Paketi ifthen, keyval, geometry in tikz se vedno naložijo, saj so
+%     za uporabo paketa izpit obvezni.
 % - sumniki:
-%     Če vaš urejevalnik pod Windows ne pozna Unicodea (ostali ga že),
+%     Če vaš urejevalnik pod Windowsi ne pozna kodne tabele UTF-8
+%     (ostali operacijski sistemi že leta podpirajo UTF-8),
 %     uporabite možnost sumniki, da boste lahko pisali č namesto "c, ali \v c.
 % - 10pt, 11pt, fleqn, ...
 %     Uporabite lahko tudi vse ostale možnosti ki obstajajo v paketu article.
@@ -20,7 +23,7 @@
 \begin{document}
 
 % Vsak izpit se začne z ukazom \izpit{predmet}{datum}{pravila}.
-% Če želite v eni datoteki ustvariti več izpitov, ukaz pokličite večkrat.
+% Če želite v eni datoteki ustvariti več izpitov, lahko ukaz uporabite večkrat.
 %
 % Ukaz \izpit sprejme naslednje neobvezne možnosti:
 % - ucilnica:
@@ -42,7 +45,7 @@
 %     ter števila točk (če ste uporabili ukaz \tocke{} - glej spodaj).
 
 \izpit[ucilnica = MFP, sedezni red, naloge = 3]
-  {Diskretna algebraična analiza: 2. izpit}{10. 10. 2010}{
+  {Diskretna algebraična analiza: 2. izpit}{11. 12. 2013}{
   Čas pisanja je 120 minut. Možno je doseči 100 točk. Veliko uspeha!
 }
 
@@ -68,16 +71,16 @@
   % Ukaz \prostor na polo doda prostor za rešitev. Ukaz sprejme neobvezen
   % argument, ki pove, kolikšen delež prostora naj bo namenjen nalogi.
   % Če paket naložite z možnostjo 'arhiv', ukaz \prostor ne naredi ničesar.
-  \prostor[2] % Ta naloga bo imela na voljo dvakrat toliko prostora kot druga.
+  \prostor[2] % Za to nalogo bo dvakrat toliko prostora kot za naslednjo.
 
   \podnaloga[10]
-    Naj bo $G$ grupa in $H$ njena podgrupa edinka. Dokaži, da grupa $G$ ni
+    Naj bo $G$ grupa in $H$ njena podgrupa edinka. Dokažite, da grupa $G$ ni
     enostavna natanko tedaj, ko ima $H$ polbrata.
 
   \prostor
 
 \naloga[\tocke{25}]
-  Skiciraj graf funkcije $f \colon \mathbb{R} \to \mathbb{R}$, podane s
+  Skicirajte graf funkcije $f \colon \mathbb{R} \to \mathbb{R}$, podane s
   predpisom
   \[
     f(x) = \frac{1 + x - x^2}{3 x^2 - 5} \;.
