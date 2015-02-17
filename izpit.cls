@@ -186,9 +186,9 @@
   \@ifthen{\equal{#1}{310}}{\nastavi@ucilnico{\@tristodeset}{3.10}}
   \@ifthen{\equal{#1}{311}}{\nastavi@ucilnico{\@tristoenajst}{3.11}}
   \@ifthen{\equal{#1}{312}}{\nastavi@ucilnico{\@tristodvanajst}{3.12}}
-  \@ifthen{\equal{#1}{P1}}{\nastavi@ucilnico{\@pena}{P1}}
+  \@ifthen{\equal{#1}{P1}}{\nastavi@ucilnico{\@dvestodva}{P1}}
   \@ifthen{\equal{#1}{F1}}{\nastavi@ucilnico{\@fena}{F1}}
-  \@ifthen{\equal{#1}{F2}}{\nastavi@ucilnico{\@fdve}{F2}}
+  \@ifthen{\equal{#1}{F2}}{\nastavi@ucilnico{\@fdva}{F2}}
   \@ifthen{\equal{#1}{MFP}}{\nastavi@ucilnico{\@mfp}{MFP}}
   \@ifthen{\equal{#1}{VFP}}{\nastavi@ucilnico{\@vfp}{VFP}}
   \setboolean{@sedeznired}{true}
@@ -517,14 +517,6 @@
   \end{tikzpicture}%
 }
 
-\newcommand{\@pena}{%
-  \begin{tikzpicture}[ucilnica]
-    \draw[kateder] (-4.5,0) rectangle (-0.5,1);
-    \@sedezi{-1, ..., -7}{-3, -1, 2, 4}{-4, -2, 1, 3}
-    \@sedezi{-8}{-3, -1}{-4, -2}
-  \end{tikzpicture}%
-}
-
 \newcommand{\@fena}{%
   \begin{tikzpicture}[ucilnica]
     \draw[kateder] (-4.3,0.4) rectangle (-2.7,-0.4);
@@ -533,7 +525,7 @@
   \end{tikzpicture}%
 }
 
-\newcommand{\@fdve}{%
+\newcommand{\@fdva}{%
   \begin{tikzpicture}[ucilnica]
     \draw[kateder] (-4.8,0.4) rectangle (-2.8,-0.4);
     \@sedezi{-1,...,-7}{-4.5,-2.5,-0.5,1.5,3.5}{-3.5,-1.5,0.5,2.5,4.5}
