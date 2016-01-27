@@ -150,7 +150,7 @@
 \newcommand{\ime@oznaka}{\@sloeng{Ime in priimek}{Name and surname}}
 \newcommand{\vpisna@oznaka}{\@sloeng{Vpisna \v{s}tevilka}{Student ID}}
 \newcommand{\sedez@oznaka}{\@sloeng{Sede\v{z}}{Seat}}
-\newcommand{\naloga@oznaka}[1]{\@sloeng{#1. naloga}{Problem #1}}
+\newcommand{\naloga@oznaka}[1]{\@sloeng{#1. naloga}{Question #1}}
 
 \DeclareRobustCommand{\tocke}[1]{%
   % v count255 shranimo ostanek tock pri deljenju s 100
@@ -162,7 +162,7 @@
   #1 \@sloeng{%
     to\v{c}k\ifcase\count255 \or a\or i\or e\or e\fi%
   }{%
-    point\ifcase\count255 s\or \else s\fi%
+    mark\ifcase\count255 s\or \else s\fi%
   }%
 }
 
