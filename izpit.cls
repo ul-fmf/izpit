@@ -52,6 +52,7 @@
 \newboolean{@celostranske}        % Bodo naloge celostranske?
 \newboolean{@vpisnapolja}         % Naj bodo na izpitu polja za podatke?
 \newboolean{@slovenski}           % Je izpit v slovenscini ali v anglescini?
+\newboolean{@noreset}             % Naj se števec ohrani?
 \newboolean{@dodana}              % Gre naslednja naloga se na isto stran?
 \newboolean{@brezpaketov}         % Ali naj ne nalozimo dodatnih paketov?
 \newboolean{@sedeznired}          % Ali naj bo sedezni red natisnjen?
@@ -171,6 +172,7 @@
 
 % Nastavimo možnosti, ki jih sprejme glava.
 \define@key{izpit}{anglescina}[true]{\setboolean{@slovenski}{false}}
+\define@key{izpit}{noreset}[true]{\setboolean{@noreset}{true}}
 \define@key{izpit}{sedezni red}[true]{\tikzstyle{dovoljen} = [fill=black!20]}
 \define@key{izpit}{naloge}[4]{\def\stevilo@nalog{#1}}
 \define@key{izpit}{ucilnica}{
@@ -209,9 +211,9 @@
 \newcommand{\izpit}[4][]{%
   % Naredimo novo stran ter stevec nalog postavimo na zacetek.
   \clearpage%
-  \setcounter{naloga}{0}%
   % Obravnavamo argumente, v katerih so meta-podatki o izpitu.
   \setboolean{@slovenski}{true}%
+  \setboolean{@noreset}{false}%
   \setboolean{@sedeznired}{false}%
   \setkeys{izpit}{#1}%
   \def\@naslov{#2}%
@@ -219,6 +221,9 @@
   \def\@pravila{#4}%
   % Naslednja naloga pride na isto stran kot glava
   \setboolean{@dodana}{true}%
+  \@unless{\boolean{@noreset}}{%
+    \setcounter{naloga}{0}%
+  }%
   \@natisniizpit
 }
 
