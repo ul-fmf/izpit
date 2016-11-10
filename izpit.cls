@@ -505,10 +505,9 @@
 }
 
 \newcommand{\@tristodvanajst}{%
-  \begin{tikzpicture}[ucilnica, rotate = 90, yscale = -1]
-    \draw[kateder] (0, -1) rectangle (0.55, 1);
-    \@sedezi{1, 2}{-2, -4, -6}{-1, -3, -5}
-    \@sedezi{-1}{-2.25,-4.75}{-1,-3.5,-6}
+  \begin{tikzpicture}[ucilnica]
+    \draw[kateder] (-2.5, 0) rectangle (-0.5, 0.55);
+    \@sedezi{-1, ..., -5}{-1, 2}{-2, 1, 3}
   \end{tikzpicture}%
 }
 
