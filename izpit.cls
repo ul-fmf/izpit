@@ -52,6 +52,7 @@
 \newboolean{@celostranske}        % Bodo naloge celostranske?
 \newboolean{@vpisnapolja}         % Naj bodo na izpitu polja za podatke?
 \newboolean{@slovenski}           % Je izpit v slovenscini ali v anglescini?
+\newboolean{@nadaljuj}            % Naj se števec nalog nadaljuje od prej?
 \newboolean{@dodana}              % Gre naslednja naloga se na isto stran?
 \newboolean{@brezpaketov}         % Ali naj ne nalozimo dodatnih paketov?
 \newboolean{@sedeznired}          % Ali naj bo sedezni red natisnjen?
@@ -149,7 +150,7 @@
 \newcommand{\ime@oznaka}{\@sloeng{Ime in priimek}{Name and surname}}
 \newcommand{\vpisna@oznaka}{\@sloeng{Vpisna \v{s}tevilka}{Student ID}}
 \newcommand{\sedez@oznaka}{\@sloeng{Sede\v{z}}{Seat}}
-\newcommand{\naloga@oznaka}[1]{\@sloeng{#1. naloga}{Problem #1}}
+\newcommand{\naloga@oznaka}[1]{\@sloeng{#1. naloga}{Question #1}}
 
 \DeclareRobustCommand{\tocke}[1]{%
   % v count255 shranimo ostanek tock pri deljenju s 100
@@ -161,7 +162,7 @@
   #1 \@sloeng{%
     to\v{c}k\ifcase\count255 \or a\or i\or e\or e\fi%
   }{%
-    point\ifcase\count255 s\or \else s\fi%
+    mark\ifcase\count255 s\or \else s\fi%
   }%
 }
 
@@ -171,6 +172,7 @@
 
 % Nastavimo možnosti, ki jih sprejme glava.
 \define@key{izpit}{anglescina}[true]{\setboolean{@slovenski}{false}}
+\define@key{izpit}{nadaljuj}[true]{\setboolean{@nadaljuj}{true}}
 \define@key{izpit}{sedezni red}[true]{\tikzstyle{dovoljen} = [fill=black!20]}
 \define@key{izpit}{naloge}[4]{\def\stevilo@nalog{#1}}
 \define@key{izpit}{ucilnica}{
@@ -209,9 +211,9 @@
 \newcommand{\izpit}[4][]{%
   % Naredimo novo stran ter stevec nalog postavimo na zacetek.
   \clearpage%
-  \setcounter{naloga}{0}%
   % Obravnavamo argumente, v katerih so meta-podatki o izpitu.
   \setboolean{@slovenski}{true}%
+  \setboolean{@nadaljuj}{false}%
   \setboolean{@sedeznired}{false}%
   \setkeys{izpit}{#1}%
   \def\@naslov{#2}%
@@ -219,6 +221,9 @@
   \def\@pravila{#4}%
   % Naslednja naloga pride na isto stran kot glava
   \setboolean{@dodana}{true}%
+  \@unless{\boolean{@nadaljuj}}{%
+    \setcounter{naloga}{0}%
+  }%
   \@natisniizpit
 }
 
