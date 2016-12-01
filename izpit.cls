@@ -56,6 +56,7 @@
 \newboolean{@dodana}              % Gre naslednja naloga se na isto stran?
 \newboolean{@brezpaketov}         % Ali naj ne nalozimo dodatnih paketov?
 \newboolean{@sedeznired}          % Ali naj bo sedezni red natisnjen?
+\newboolean{@vpisnastevilka}      % Ali naj se prikaze polje za vpisno stevilko?
 
 %------------------------------------------------------------------------(end)
 %                                   Opcije
@@ -173,6 +174,7 @@
 % Nastavimo možnosti, ki jih sprejme glava.
 \define@key{izpit}{anglescina}[true]{\setboolean{@slovenski}{false}}
 \define@key{izpit}{nadaljuj}[true]{\setboolean{@nadaljuj}{true}}
+\define@key{izpit}{brez vpisne}[true]{\setboolean{@vpisnastevilka}{false}}
 \define@key{izpit}{sedezni red}[true]{\tikzstyle{dovoljen} = [fill=black!20]}
 \define@key{izpit}{naloge}[4]{\def\stevilo@nalog{#1}}
 \define@key{izpit}{ucilnica}{
@@ -215,6 +217,7 @@
   \setboolean{@slovenski}{true}%
   \setboolean{@nadaljuj}{false}%
   \setboolean{@sedeznired}{false}%
+  \setboolean{@vpisnastevilka}{true}%
   \setkeys{izpit}{#1}%
   \def\@naslov{#2}%
   \def\@podnaslov{#3}%
@@ -259,11 +262,13 @@
         \@oznaka{\hfill\llap{\ucilnica@polje}}{\hfill\ucilnica@oznaka}%
         \vskip \v@predvpisno%
       }%
-      \begin{tikzpicture}
-        \draw[xscale=\x@sirinavpisne, yscale=\x@visinavpisne, very thin]
-          (0, 0) grid (8, 1);%
-        \draw[overlay, xscale=\x@sirinavpisne] (8, 0) node[below left=0pt, inner xsep=0pt] {\footnotesize \vpisna@oznaka};
-      \end{tikzpicture}
+      \@ifthen{\boolean{@vpisnastevilka}}{%
+        \begin{tikzpicture}
+          \draw[xscale=\x@sirinavpisne, yscale=\x@visinavpisne, very thin]
+            (0, 0) grid (8, 1);%
+          \draw[overlay, xscale=\x@sirinavpisne] (8, 0) node[below left=0pt, inner xsep=0pt] {\footnotesize \vpisna@oznaka};
+        \end{tikzpicture}
+      }%
     }%
   \@ifthen{\stevilo@nalog > -1}{%
     \def\@tempsize{3.5cm}%
