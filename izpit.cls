@@ -539,6 +539,7 @@
 \newcommand{\@fena}{%
   \begin{tikzpicture}[ucilnica]
     \draw[kateder] (-4.3,0.4) rectangle (-2.7,-0.4);
+    \@sedezi{0}{4}{3}
     \@sedezi{-1,...,-9}{-3,-2}{-4,-1}
     \@sedezi{-1,...,-8}{2, 4, 6}{1, 3, 5}
   \end{tikzpicture}%
