@@ -547,7 +547,7 @@
 
 \newcommand{\@fdva}{%
   \begin{tikzpicture}[ucilnica]
-    \draw[kateder] (-4.8,0.4) rectangle (-2.8,-0.4);
+    \draw[kateder] (-1,0.4) rectangle (1,-0.4);
     \@sedezi{-1,-2,-4,-5,-6,-7,-8}{-4.5,-2.5,-0.5,1.5,3.5}{-3.5,-1.5,0.5,2.5,4.5}
   \end{tikzpicture}%
 }
