@@ -524,7 +524,8 @@
 \newcommand{\@pena}{%
   \begin{tikzpicture}[ucilnica]
     \draw[kateder] (3,0) rectangle (6.5,1);
-    \@sedezi{-1, ..., -5}{-5, -3, -1, 1, 3, 5}{-6, -4, -2, 2, 4, 6}
+    \@sedezi{-1, ..., -5}{-5, -3, -1}{-6, -4, -2}
+    \@sedezi{-1, ..., -4}{1, 3, 5}{2, 4, 6}
   \end{tikzpicture}%
 }
 
