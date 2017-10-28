@@ -524,7 +524,8 @@
 \newcommand{\@pena}{%
   \begin{tikzpicture}[ucilnica]
     \draw[kateder] (3,0) rectangle (6.5,1);
-    \@sedezi{-1, ..., -5}{-5, -3, -1, 1, 3, 5}{-6, -4, -2, 2, 4, 6}
+    \@sedezi{-1, ..., -5}{-5, -3, -1}{-6, -4, -2}
+    \@sedezi{-1, ..., -4}{1, 3, 5}{2, 4, 6}
   \end{tikzpicture}%
 }
 
@@ -538,6 +539,7 @@
 \newcommand{\@fena}{%
   \begin{tikzpicture}[ucilnica]
     \draw[kateder] (-4.3,0.4) rectangle (-2.7,-0.4);
+    \@sedezi{0}{4}{3}
     \@sedezi{-1,...,-9}{-3,-2}{-4,-1}
     \@sedezi{-1,...,-8}{2, 4, 6}{1, 3, 5}
   \end{tikzpicture}%
@@ -545,7 +547,7 @@
 
 \newcommand{\@fdva}{%
   \begin{tikzpicture}[ucilnica]
-    \draw[kateder] (-4.8,0.4) rectangle (-2.8,-0.4);
+    \draw[kateder] (-1,0.4) rectangle (1,-0.4);
     \@sedezi{-1,-2,-4,-5,-6,-7,-8}{-4.5,-2.5,-0.5,1.5,3.5}{-3.5,-1.5,0.5,2.5,4.5}
   \end{tikzpicture}%
 }
