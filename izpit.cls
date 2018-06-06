@@ -153,12 +153,22 @@
 \newcommand{\sedez@oznaka}{\@sloeng{Sede\v{z}}{Seat}}
 \newcommand{\naloga@oznaka}[1]{\@sloeng{#1. naloga}{Question #1}}
 
+\def\@gobbleminus#1{\ifx-#1\else#1\fi}
+\def\@IsInteger#1{%
+  TT\fi
+  \ifcat_\ifnum9<1\@gobbleminus#1 _\else A\fi
+}
+
 \DeclareRobustCommand{\tocke}[1]{%
   % v count255 shranimo ostanek tock pri deljenju s 100
-  \count255=#1
-  \divide\count255 by 100
-  \multiply\count255 by -100
-  \advance\count255 by #1
+  \if\@IsInteger{#1}%
+    \count255=#1
+    \divide\count255 by 100
+    \multiply\count255 by -100
+    \advance\count255 by #1
+  \else%
+    \count255=0
+  \fi
   % glede na ostanek tock pri deljenju s 100 nastavimo koncnico
   #1 \@sloeng{%
     to\v{c}k\ifcase\count255 \or a\or i\or e\or e\fi%
