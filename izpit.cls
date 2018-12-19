@@ -517,7 +517,7 @@
 \newcommand{\@tristodvanajst}{%
   \begin{tikzpicture}[ucilnica]
     \draw[kateder] (-2.5, 0) rectangle (-0.5, 0.55);
-    \@sedezi{-1, ..., -5}{-1, 2}{-2, 1, 3}
+    \@sedezi{-1, ..., -3}{-1, 2}{-2, 1, 3}
   \end{tikzpicture}%
 }
 
