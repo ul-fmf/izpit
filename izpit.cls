@@ -211,6 +211,28 @@
   \setboolean{@sedeznired}{true}
 }
 
+\define@key{izpit}{predizpitom}[-12mm]{\def\v@predizpitom{#1}}
+\define@key{izpit}{mednalogami}[2em]{\def\v@mednalogami{#1}}
+\define@key{izpit}{medpodnalogami}[0.75em]{\def\v@medpodnalogami{#1}}
+\define@key{izpit}{zapodnalogo}[0.5em]{\def\h@zapodnalogo{#1}}
+\define@key{izpit}{sirinaglave}[\textwidth]{\def\h@sirinaglave{#1}}
+\define@key{izpit}{sirinanaslova}[12cm]{\def\h@sirinanaslova{#1}}
+\define@key{izpit}{sirinaucilnice}[3.456cm]{\def\h@sirinaucilnice{#1}}
+\define@key{izpit}{sirinaimena}[11cm]{\def\h@sirinaimena{#1}}
+\define@key{izpit}{visinaucilnice}[2.4cm]{\def\v@visinaucilnice{#1}}
+\define@key{izpit}{odmiktock}[5mm]{\def\h@odmiktock{#1}}
+\define@key{izpit}{predpraznoglavo}[5mm]{\def\v@predpraznoglavo{#1}}
+\define@key{izpit}{predpodnaslovom}[1mm]{\def\v@predpodnaslovom{#1}}
+\define@key{izpit}{predpravili}[2mm]{\def\v@predpravili{#1}}
+\define@key{izpit}{predimenom}[6mm]{\def\v@predimenom{#1}}
+\define@key{izpit}{predvpisno}[6pt]{\def\v@predvpisno{#1}}
+\define@key{izpit}{visinavpisne}[0.7]{\def\x@visinavpisne{#1}}
+\define@key{izpit}{sirinavpisne}[0.432]{\def\x@sirinavpisne{#1}}
+\define@key{izpit}{visinaocene}[\x@visinavpisne]{\def\x@visinaocene{#1}}
+\define@key{izpit}{sirinaocene}[\x@visinavpisne]{\def\x@sirinaocene{#1}}
+\define@key{izpit}{velikostucilnice}[0.15]{\def\x@velikostucilnice{#1}}
+\define@key{izpit}{velikostsedeza}[3.1pt]{\def\h@velikostsedeza{#1}}
+
 \newcommand{\nastavi@ucilnico}[2]{
   \def\ucilnica@polje{#1}%
   \def\ucilnica@oznaka{\sedez@oznaka\ (#2)}%
