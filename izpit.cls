@@ -127,7 +127,6 @@
 \def\h@sirinanaslova{12cm}
 \def\h@sirinaucilnice{3.456cm}
 \def\h@sirinaimena{11cm}
-\def\v@visinaucilnice{2.4cm}
 \def\h@odmiktock{5mm}
 \def\v@predpraznoglavo{5mm}
 \def\v@predpodnaslovom{1mm}
@@ -210,6 +209,27 @@
   \@ifthen{\equal{#1}{VFP}}{\nastavi@ucilnico{\@vfp}{VFP}}
   \setboolean{@sedeznired}{true}
 }
+
+\define@key{izpit}{pred izpitom}[]{\def\v@predizpitom{#1}}
+\define@key{izpit}{med nalogami}[]{\def\v@mednalogami{#1}}
+\define@key{izpit}{med podnalogami}[]{\def\v@medpodnalogami{#1}}
+\define@key{izpit}{za podnalogo}[]{\def\h@zapodnalogo{#1}}
+\define@key{izpit}{sirina glave}[]{\def\h@sirinaglave{#1}}
+\define@key{izpit}{sirina naslova}[]{\def\h@sirinanaslova{#1}}
+\define@key{izpit}{sirina ucilnice}[]{\def\h@sirinaucilnice{#1}}
+\define@key{izpit}{sirina imena}[]{\def\h@sirinaimena{#1}}
+\define@key{izpit}{odmik tock}[]{\def\h@odmiktock{#1}}
+\define@key{izpit}{pred prazno glavo}[]{\def\v@predpraznoglavo{#1}}
+\define@key{izpit}{pred datumom}[]{\def\v@predpodnaslovom{#1}}
+\define@key{izpit}{pred pravili}[]{\def\v@predpravili{#1}}
+\define@key{izpit}{pred imenom}[]{\def\v@predimenom{#1}}
+\define@key{izpit}{pred vpisno}[]{\def\v@predvpisno{#1}}
+\define@key{izpit}{visina vpisne}[]{\def\x@visinavpisne{#1}}
+\define@key{izpit}{sirina vpisne}[]{\def\x@sirinavpisne{#1}}
+\define@key{izpit}{visina ocene}[]{\def\x@visinaocene{#1}}
+\define@key{izpit}{sirina ocene}[]{\def\x@sirinaocene{#1}}
+\define@key{izpit}{velikost ucilnice}[]{\def\x@velikostucilnice{#1}}
+\define@key{izpit}{velikost sedeza}[]{\def\h@velikostsedeza{#1}}
 
 \newcommand{\nastavi@ucilnico}[2]{
   \def\ucilnica@polje{#1}%
