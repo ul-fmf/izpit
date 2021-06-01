@@ -101,6 +101,7 @@
   \RequirePackage{amsfonts,amsmath}
   \RequirePackage[slovene]{babel}
   \RequirePackage[\@encoding]{inputenc}
+  \RequirePackage{xstring}
 }
 \RequirePackage{geometry}
 \RequirePackage{tikz}
@@ -139,6 +140,9 @@
 \def\x@sirinaocene{\x@visinavpisne}
 \def\x@velikostucilnice{0.15}
 \def\h@velikostsedeza{3.1pt}
+
+\def\t@imepriimek{}
+\def\t@vpisnastevilka{}
 
 %------------------------------------------------------------------------(end)
 %                                Vecjezicnost
@@ -231,6 +235,9 @@
 \define@key{izpit}{velikost ucilnice}[]{\def\x@velikostucilnice{#1}}
 \define@key{izpit}{velikost sedeza}[]{\def\h@velikostsedeza{#1}}
 
+\define@key{izpit}{ime in priimek}[]{\def\t@imepriimek{#1}}
+\define@key{izpit}{vpisna stevilka}[]{\def\t@vpisnastevilka{#1}}
+
 \newcommand{\nastavi@ucilnico}[2]{
   \def\ucilnica@polje{#1}%
   \def\ucilnica@oznaka{\sedez@oznaka\ (#2)}%
@@ -284,6 +291,7 @@
       \begin{tikzpicture}
         \draw[very thin] (0, 0) -- (\h@sirinaimena, 0);%
         \draw[overlay] (0, 0) node[below right=0pt, inner xsep=0pt] {\footnotesize \ime@oznaka};
+        \draw[overlay] (0, 0) node[above right=0pt, inner xsep=0pt] {\large \t@imepriimek};
       \end{tikzpicture}
     }%
     \hfill%
@@ -297,6 +305,8 @@
           \draw[xscale=\x@sirinavpisne, yscale=\x@visinavpisne, very thin]
             (0, 0) grid (8, 1);%
           \draw[overlay, xscale=\x@sirinavpisne] (8, 0) node[below left=0pt, inner xsep=0pt] {\footnotesize \vpisna@oznaka};
+          \foreach \i in {1, ..., 8}
+              \draw[overlay, xscale=\x@sirinavpisne] (\i, 0) node[above left=2pt, inner xsep=0pt] {\large \StrChar{\t@vpisnastevilka}{\i}};
         \end{tikzpicture}
       }%
     }%
