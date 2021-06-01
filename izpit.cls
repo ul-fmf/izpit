@@ -13,7 +13,7 @@
 %-----------------------------------------------------------------------(fold)
 
 % Nalozimo pakete, ki ponujajo enostavno programiranje.
-\RequirePackage{ifthen, keyval}
+\RequirePackage{ifthen, keyval, xstring}
 
 % Definiramo pomozne ukaze.
 \newcommand{\@ifthen}[2]{\ifthenelse{#1}{#2}{\relax}}
@@ -101,7 +101,6 @@
   \RequirePackage{amsfonts,amsmath}
   \RequirePackage[slovene]{babel}
   \RequirePackage[\@encoding]{inputenc}
-  \RequirePackage{xstring}
 }
 \RequirePackage{geometry}
 \RequirePackage{tikz}
