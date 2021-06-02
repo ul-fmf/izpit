@@ -290,7 +290,7 @@
       \begin{tikzpicture}
         \draw[very thin] (0, 0) -- (\h@sirinaimena, 0);%
         \draw[overlay] (0, 0) node[below right=0pt, inner xsep=0pt] {\footnotesize \ime@oznaka};
-        \draw[overlay] (0, 0) node[above right=0pt, inner xsep=0pt] {\large \t@imepriimek};
+        \draw[overlay] (0, 0) node[above right=0pt, inner xsep=0pt] {\LARGE \t@imepriimek};
       \end{tikzpicture}
     }%
     \hfill%
@@ -305,7 +305,7 @@
             (0, 0) grid (8, 1);%
           \draw[overlay, xscale=\x@sirinavpisne] (8, 0) node[below left=0pt, inner xsep=0pt] {\footnotesize \vpisna@oznaka};
           \foreach \i in {1, ..., 8}
-              \draw[overlay, xscale=\x@sirinavpisne] (\i, 0) node[above left=2pt, inner xsep=0pt] {\large \StrChar{\t@vpisnastevilka}{\i}};
+              \draw[xscale=\x@sirinavpisne, yscale=\x@visinavpisne] (\i - 0.5, 0.5) node {\LARGE \StrChar{\t@vpisnastevilka}{\i}};
         \end{tikzpicture}
       }%
     }%
