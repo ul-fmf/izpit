@@ -190,6 +190,7 @@
 \define@key{izpit}{sedezni red}[true]{\tikzstyle{dovoljen} = [fill=black!20]}
 \define@key{izpit}{naloge}[4]{\def\stevilo@nalog{#1}}
 \define@key{izpit}{ucilnica}{
+  \@ifthen{\equal{#1}{101}}{\nastavi@ucilnico{\@stoena}{1.01}}
   \@ifthen{\equal{#1}{201}}{\nastavi@ucilnico{\@dvestoena}{2.01}}
   \@ifthen{\equal{#1}{202}}{\nastavi@ucilnico{\@dvestodva}{2.02}}
   \@ifthen{\equal{#1}{203}}{\nastavi@ucilnico{\@dvestotri}{2.03}}
@@ -473,6 +474,13 @@
     \foreach \j in {#3} {#1{\i}{\j} node[sedez] {};}
     \foreach \j in {#4} {#1{\i}{\j} node[sedez, dovoljen] {};}
   }
+}
+
+\newcommand{\@stoena}{%
+	\begin{tikzpicture}[ucilnica]
+	\draw[kateder] (-1.5,0) rectangle (-4.5,1);
+	\@sedezi{-1, ..., -9}{-3, -1, 1, 3}{-4, -2, 0, 2, 4}
+	\end{tikzpicture}%
 }
 
 \newcommand{\@dvestoena}{%
