@@ -478,8 +478,9 @@
 
 \newcommand{\@stoena}{%
 	\begin{tikzpicture}[ucilnica]
-	\draw[kateder] (-1.5,0) rectangle (-4.5,1);
-	\@sedezi{-1, ..., -9}{-3, -1, 1, 3}{-4, -2, 0, 2, 4}
+	\draw[kateder] (-3, 0) rectangle (-6, 1);
+	\@sedezi{-1}{-4, -3, -2, -1, 1, 3}{0, 2, 4}
+	\@sedezi{-2, ..., -9}{-3, -1, 1, 3}{-4, -2, 0, 2, 4}
 	\end{tikzpicture}%
 }
 
