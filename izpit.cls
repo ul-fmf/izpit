@@ -99,7 +99,7 @@
 \LoadClass[\@points]{article}
 \@unless{\boolean{@brezpaketov}}{
   \RequirePackage{amsfonts,amsmath}
-  \RequirePackage[slovene]{babel}
+  \RequirePackage[english,slovene]{babel}
   \RequirePackage[\@encoding]{inputenc}
 }
 \RequirePackage{geometry}
@@ -264,6 +264,7 @@
   \@unless{\boolean{@nadaljuj}}{%
     \setcounter{naloga}{0}%
   }%
+  \@sloeng{\selectlanguage{slovene}}{\selectlanguage{english}}
   \@natisniizpit
 }
 
